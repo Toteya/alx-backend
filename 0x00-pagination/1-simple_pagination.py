@@ -42,7 +42,5 @@ class Server:
         start = data_range[0]
         end = data_range[1]
         data_len = len(self.dataset())
-        if start >= data_len or end >= data_len:
-            return []
 
         return self.dataset()[start: end]
