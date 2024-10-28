@@ -3,6 +3,7 @@
 simple_helper_function
 """
 
+
 def index_range(page: int, page_size: int) -> tuple[int, int]:
     """ Takes page and page_size and returns the start index and end index.
     """
