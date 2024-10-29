@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+1-simple_pagination
+"""
 import csv
 import math
 from typing import List
@@ -41,6 +44,5 @@ class Server:
         data_range = index_range(page, page_size)
         start = data_range[0]
         end = data_range[1]
-        data_len = len(self.dataset())
 
         return self.dataset()[start: end]
