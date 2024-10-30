@@ -14,16 +14,24 @@ class LIFOCache(BaseCaching):
     def __init__(self):
         """ Initialise cahing system instance
         """
+        self._keys = []
         super().__init__()
 
     def put(self, key, item):
         """ Stores to cache the key and item provided
         """
-        if not (key is None or item is None):
-            self.cache_data.update({key: item})
+        if key is None or item is None:
+            return
+
+        self.cache_data.update({key: item})
+        if key in self._keys:
+            self._keys.remove(key)
+        self._keys.append(key)
 
         if len(self.cache_data) > self.MAX_ITEMS:
-            key_last = self.cache_data.popitem()
+            # key_last = list(self.cache_data.keys())[-2]
+            key_last = self._keys[-2]
+            self.cache_data.pop(key_last)
             print("DISCARD: {}".format(key_last))
 
     def get(self, key):
