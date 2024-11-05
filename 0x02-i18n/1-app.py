@@ -14,10 +14,7 @@ class Config:
 
 app = Flask(__name__)
 app.config.from_object(Config())
-app.config['BABEL_DEFAULT_LOCALE'] = 'en'
-app.config['BABEL_DEFAULT_TIMEZONE'] = 'UCT'
-babel = Babel(app)
-
+babel = Babel(app, default_locale='en', default_timezone='UTC')
 
 
 @app.route('/', strict_slashes=False)
