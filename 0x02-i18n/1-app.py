@@ -14,6 +14,7 @@ class Config:
 
 app = Flask(__name__)
 babel = Babel(app, default_locale='en', default_timezone='UTC')
+app.config.from_object(Config)
 
 
 @app.route('/', strict_slashes=False)
