@@ -20,12 +20,12 @@ app = Flask(__name__)
 app.config.from_object(Config())
 babel = Babel(app)
 
-# @babel.localeselector
+
+@babel.localeselector
 def get_locale():
     """ Selects and returns the best matching locale
     """
     request.accept_languages.best_match(app.config['LANGUAGES'])
-
 
 
 @app.route('/', strict_slashes=False)
@@ -34,6 +34,8 @@ def welcome():
     """
     home_title = gettext('Welcome to Holberton')
     home_header = gettext('Hello world')
-    return render_template('3-index.html', home_title=home_title, home_header=home_header)
-
-
+    return render_template(
+        '3-index.html',
+        home_title=home_title,
+        home_header=home_header
+    )
