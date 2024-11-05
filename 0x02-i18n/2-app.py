@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-1-app: Flask web app
+2-app: Flask web app
 """
 from flask import Flask
 from flask import render_template
