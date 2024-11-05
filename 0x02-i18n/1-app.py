@@ -5,13 +5,16 @@
 from flask import Flask, render_template
 from flask_babel import Babel
 
-app = Flask(__name__)
-babel = Babel(app, locale_selector='en', timezone_selector='UTC')
 
 class Config:
     """ Babel configurations class
     """
     LANGUAGES = ['en', 'fr']
+
+
+app = Flask(__name__)
+babel = Babel(app)
+
 
 @app.route('/', strict_slashes=False)
 def welcome():
