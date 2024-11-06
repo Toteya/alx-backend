@@ -39,3 +39,8 @@ def welcome():
         home_title=home_title,
         home_header=home_header
     )
+
+
+if __name__ == '__main__':
+    app.run(port=5000)
+
