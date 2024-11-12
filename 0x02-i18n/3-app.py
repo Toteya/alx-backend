@@ -25,7 +25,7 @@ babel = Babel(app)
 def get_locale():
     """ Selects and returns the best matching locale
     """
-    request.accept_languages.best_match(app.config['LANGUAGES'])
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route('/', strict_slashes=False)
@@ -43,4 +43,3 @@ def welcome():
 
 if __name__ == '__main__':
     app.run(port=5000)
-
