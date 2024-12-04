@@ -1,39 +1,30 @@
 import redis from 'redis';
-import { exec } from 'child_process';
 import { promisify } from 'util';
-
-// startRedisServer();
 
 const client = redis.createClient();
 
 client.on('error', error => {
   console.log(`Redis client not connected to the server: ${error}`)
 });
+client.on('ready', () => {
+  console.log('Redis client connected to the server');
+})
 
-await client.connect()
-  .then(() => {
-    console.log('Redis client connected to the server');
-  })
-  .catch((error) => {
-    console.log(`Redis client not connected to the server: ${error}`);
-  });
-
-async function startRedisServer() {
-  const execP = promisify(exec);
-  await execP('redis-6.0.10/src/redis-server')
-    .then(() => console.log('Redis-server started'))
-    .catch((error) => console.log(error));
-}
+const setP = promisify(client.set).bind(client);
+const getP = promisify(client.get).bind(client);
 
 async function setNewSchool(schoolName, value) {
-  const reply = await client.set(schoolName, value);
-  console.log(`Reply: ${reply}`);
+  await setP(schoolName, value)
+    .then(() => {
+      console.log('Reply: OK');
+    });
 }
 
 async function displaySchoolValue(schoolName) {
-  console.log(await client.get(schoolName));
+  const value = await getP(schoolName);
+  console.log(value);
 }
 
-displaySchoolValue('Holberton');
-setNewSchool('HolbertonSanFrancisco', '100');
-displaySchoolValue('HolbertonSanFrancisco');
+await displaySchoolValue('Holberton');
+await setNewSchool('HolbertonSanFrancisco', '100');
+await displaySchoolValue('HolbertonSanFrancisco');
