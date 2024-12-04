@@ -5,11 +5,18 @@ import { promisify } from 'util';
 // startRedisServer();
 
 const client = createClient();
+
 client.on('error', error => {
   console.log(`Redis client not connected to the server: ${error}`)
 });
 
-connectClient();
+await client.connect()
+  .then(() => {
+    console.log('Redis client connected to the server');
+  })
+  .catch((error) => {
+    console.log(`Redis client not connected to the server: ${error}`);
+  });
 
 async function startRedisServer() {
   const execP = promisify(exec);
@@ -17,15 +24,5 @@ async function startRedisServer() {
     .then(() => {})
     .catch((error) => {
       console.log(error.message);
-    });
-}
-
-async function connectClient() {
-  await client.connect()
-    .then(() => {
-      console.log('Redis client connected to the server');
-    })
-    .catch((error) => {
-      console.log(`Redis client not connected to the server: ${error}`);
     });
 }
