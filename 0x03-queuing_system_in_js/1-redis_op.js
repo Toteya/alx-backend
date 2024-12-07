@@ -9,7 +9,7 @@ client.on('ready', () => {
   console.log('Redis client connected to the server');
 })
 
-function setNewSchool(schoolName, value, callback) {
+function setNewSchool(schoolName, value) {
   client.set(schoolName, value, redis.print);
 }
 
