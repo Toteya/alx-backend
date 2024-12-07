@@ -10,21 +10,25 @@ client.on('ready', () => {
   console.log('Redis client connected to the server');
 })
 
-const setP = promisify(client.set).bind(client);
-const getP = promisify(client.get).bind(client);
+const setAsync = promisify(client.set).bind(client);
+const getAsync = promisify(client.get).bind(client);
 
 async function setNewSchool(schoolName, value) {
-  await setP(schoolName, value)
-    .then(() => {
-      console.log('Reply: OK');
-    });
+  await setAsync(schoolName, value)
+    .then((reply) => {
+      console.log(`Reply: ${reply}`);
+    })
+    .catch((err) => {});
 }
 
 async function displaySchoolValue(schoolName) {
-  const value = await getP(schoolName);
-  console.log(value);
+  await getAsync(schoolName)
+    .then((reply) => {
+      console.log(reply);
+    })
+    .catch((err) => {});
 }
 
-await displaySchoolValue('Holberton');
-await setNewSchool('HolbertonSanFrancisco', '100');
-await displaySchoolValue('HolbertonSanFrancisco');
+displaySchoolValue('Holberton');
+setNewSchool('HolbertonSanFrancisco', '100');
+displaySchoolValue('HolbertonSanFrancisco');
